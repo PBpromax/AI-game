@@ -111,9 +111,18 @@ export const CASE_TEMPLATE: CaseTemplate = {
   ],
   "evidence": [
     {
+      "id": "ev-song-hokunen",
+      "title": "《燃北》",
+      "description": "《燃北》是十五年前毕业典礼上突然从广播室响起的歌曲，本不在典礼正式流程内，却是这届学生都熟悉、带有强烈私人记忆的歌。它的突然播放，正是整起广播室旧案被所有人记住的起点。谁在那个时间点播放了这首歌、为什么非要选它、又是怎么让它在众目睽睽下响起，都是案件核心问题。",
+      "sourceHint": "开局即获得",
+      "canCrossCheck": true,
+      "unlocked": true,
+      "imageUrl": ""
+    },
+    {
       "id": "ev-time-capsule-note",
       "title": "时间胶囊犯案声明",
-      "description": "时间胶囊最后被读出的匿名留言，自称是十五年前广播室恶作剧事件的犯人。",
+      "description": "十五年后，同学会现场从时间胶囊中读出的匿名卡片。写卡片的人自称，自己就是当年在毕业典礼上播放《燃北》的人，并把那次行为明确称作自己的犯行。也正因为这张卡片，原本沉下去多年的广播室旧案被重新拉回众人面前，调查才得以重新开始。",
       "sourceHint": "开局即获得",
       "canCrossCheck": true,
       "unlocked": true,
@@ -122,7 +131,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-broadcast-committee-roster",
       "title": "广播委员会成员名单",
-      "description": "毕业典礼当天真正负责广播室工作的同级生只有四人：鸠村、志贺、石桥、支仓。",
+      "description": "毕业典礼当天真正负责广播室相关工作的同级生只有四人：鸠村、志贺、石桥、支仓。这个名单直接限定了最初能够自由接近广播室、并有机会操作设备的人群范围，是缩小嫌疑人的第一份基础证物。",
       "sourceHint": "击穿志贺诚后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -131,7 +140,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-route-sketch",
       "title": "体育馆与广播室路线图",
-      "description": "从体育馆到广播室的可行路径只有表侧门、舞台、后台联络通道，以及极其危险的“接力棒”线路。",
+      "description": "从体育馆到广播室的可行路径只有表侧门、舞台、后台联络通道，以及极其危险的“接力棒”线路。谁能在多短时间内抵达现场、又能否在歌响起后迅速离开，这张路线图都会成为判断说法真假的关键依据。",
       "sourceHint": "击穿石桥后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -140,7 +149,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-arrival-order-testimony",
       "title": "门前到达顺序证词",
-      "description": "石桥回忆：赶到广播室门前时，志贺已经在门口，随后是石桥、支仓，最后才是鸠村。",
+      "description": "石桥回忆：赶到广播室门前时，志贺已经在门口，随后是石桥、支仓，最后才是鸠村。这个先后顺序会直接影响谁更有可能先接触过门锁、谁看到的是锁上的门，又是谁在最初那几秒里握有别人不知道的信息。",
       "sourceHint": "击穿石桥后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -149,7 +158,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-door-lock-trick",
       "title": "旧广播室门锁特性",
-      "description": "旧广播室的门能从内侧正常反锁；此外，熟悉门把的人还知道它在外侧也有一个不靠钥匙的上锁诀窍。",
+      "description": "旧广播室的门能从内侧正常反锁；此外，熟悉门把的人还知道它在外侧也有一个不靠钥匙的上锁诀窍。也就是说，门锁着这件事本身未必足以证明犯人一直待在室内，它既可能是脱身手法的一部分，也可能是刻意制造出的误导。",
       "sourceHint": "击穿志贺诚后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -158,7 +167,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-numa-stage-testimony",
       "title": "沼的舞台视角证词",
-      "description": "沼在毕业生答词时站在舞台中央，自称没有看见有人从舞台前方明显进入后台或广播室。",
+      "description": "沼在毕业生答词时站在舞台中央，自称没有看见有人从舞台前方明显进入后台或广播室。这份证词能帮助排除过于显眼的移动路线，也逼着调查把注意力转向那些不容易被舞台正面视角捕捉到的路径。",
       "sourceHint": "击穿沼后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -167,7 +176,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-kumano-cd-custody",
       "title": "《燃北》原版CD流转记录",
-      "description": "体育节后，《燃北》的原版CD被支仓春美从熊野老师那里要走，并一直留在自己手里。",
+      "description": "体育节后，《燃北》的原版CD被支仓春美从熊野老师那里要走，并一直留在自己手里。这意味着能够直接拿到原版音源的人并不多，而支仓春美与那首歌之间的关系，也因此变得比旁人更直接、更私人。",
       "sourceHint": "击穿熊野老师后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -176,7 +185,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-kumano-cd-demo",
       "title": "同学会现场播放的《燃北》CD",
-      "description": "同学会上熊野老师播放的正是支仓留下的那张《燃北》CD，插入后立即响起歌曲，没有任何延时静音。",
+      "description": "同学会上熊野老师播放的正是支仓留下的那张《燃北》CD，插入后立即响起歌曲，没有任何延时静音。它说明这首歌一旦被放进设备中，就几乎可以在没有复杂准备的情况下立刻播放，对还原当年实际操作过程非常重要。",
       "sourceHint": "击穿熊野老师后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -185,7 +194,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-harumi-death-notice",
       "title": "支仓春美的讣告记录",
-      "description": "志贺联络同级生时确认：支仓春美在大学一年级的夏天因交通事故去世，并未参加这次同学会。",
+      "description": "志贺联络同级生时确认：支仓春美在大学一年级的夏天因交通事故去世，并未参加这次同学会。这条信息不仅解释了她为何不可能在现实中现身自首，也让你在同学会上“再次见到她”这件事显得更加异常和刺眼。",
       "sourceHint": "击穿志贺诚或熊野老师后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -194,7 +203,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-pigeon-memory",
       "title": "舞台幕布后的鸽子记忆",
-      "description": "鸠村回想起《燃北》响起时，一只鸽子曾从舞台幕布后的阴影里惊飞而出。",
+      "description": "鸠村回想起《燃北》响起时，一只鸽子曾从舞台幕布后的阴影里惊飞而出。这个几乎被遗忘的细节说明，舞台附近当时很可能发生过某种突兀的动静，也提示犯人的脱身路线也许与常人第一反应不同。",
       "sourceHint": "击穿支仓春美后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -203,7 +212,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-harumi-superman-confession",
       "title": "支仓的逃离方式供述",
-      "description": "支仓承认自己把门从里面锁上后，从朝舞台的大窗翻出，踩着“接力棒”离开了广播室。",
+      "description": "支仓承认自己把门从里面锁上后，从朝舞台的大窗翻出，踩着“接力棒”离开了广播室。这份供述第一次正面解释了“锁着的房间里为什么没人”，也说明当年的所谓密室，核心根本不在机关，而在于她冒了多大的危险。",
       "sourceHint": "击穿支仓春美后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -212,7 +221,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-locked-room-purpose",
       "title": "反锁广播室的目的",
-      "description": "支仓承认自己反锁广播室，不是为了炫技，而是为了让《燃北》多响一会儿，别立刻被人掐掉。",
+      "description": "支仓承认自己反锁广播室，不是为了炫技，而是为了让《燃北》多响一会儿，别立刻被人掐掉。这说明“门锁着”并不只是脱身问题的一部分，更是她有意延长那首歌存在时间的情感选择。",
       "sourceHint": "击穿支仓春美后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -221,7 +230,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-spring-breeze-memory",
       "title": "“春风”那句旧话",
-      "description": "毕业典礼彩排那天，志贺望着舞台上的鸽子说过一句：鸽子也在等待春天早日送来暖风。",
+      "description": "毕业典礼彩排那天，志贺望着舞台上的鸽子说过一句：鸽子也在等待春天早日送来暖风。这句看似随意的话后来留在支仓心里，成了她理解“送别”“离开”和那场毕业典礼意义的重要触发点。",
       "sourceHint": "击穿支仓春美动机后解锁",
       "canCrossCheck": true,
       "unlocked": false,
@@ -230,7 +239,7 @@ export const CASE_TEMPLATE: CaseTemplate = {
     {
       "id": "ev-unfinished-surrender-plan",
       "title": "未完成的十五年后自首",
-      "description": "支仓承认自己原本打算在三十三岁的同学会上亲口自首，只是死得太早，最后只剩时间胶囊里的那张卡片。",
+      "description": "支仓承认自己原本打算在三十三岁的同学会上亲口自首，只是死得太早，最后只剩时间胶囊里的那张卡片。它把当年的恶作剧与十五年后的犯案声明真正连接起来，也让这起旧案第一次显露出“迟到的告白”这一层意义。",
       "sourceHint": "击穿支仓春美后解锁",
       "canCrossCheck": true,
       "unlocked": false,

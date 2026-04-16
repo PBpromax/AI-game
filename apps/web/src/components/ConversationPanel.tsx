@@ -49,6 +49,7 @@ export function ConversationPanel({
 }: ConversationPanelProps) {
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
   const [previewEvidence, setPreviewEvidence] = useState<EvidenceItem | null>(null);
+  const [zoomEvidence, setZoomEvidence] = useState<EvidenceItem | null>(null);
   const [previewStory, setPreviewStory] = useState<Message | null>(null);
 
   useEffect(() => {
@@ -197,9 +198,17 @@ export function ConversationPanel({
       )}
 
       {previewEvidence ? (
-        <EvidencePreviewModal
+        <EvidenceDetailModal
           evidence={previewEvidence}
           onClose={() => setPreviewEvidence(null)}
+          onZoom={() => previewEvidence.imageUrl && setZoomEvidence(previewEvidence)}
+        />
+      ) : null}
+
+      {zoomEvidence ? (
+        <EvidencePreviewModal
+          evidence={zoomEvidence}
+          onClose={() => setZoomEvidence(null)}
         />
       ) : null}
 
@@ -440,26 +449,54 @@ function EvidenceGrid({
           <article key={item.id} className="info-card evidence-card">
             <button
               type="button"
-              className={`evidence-image-slot ${item.imageUrl ? "has-image" : "empty"}`}
-              onClick={() => item.imageUrl && onPreview(item)}
-              disabled={!item.imageUrl}
+              className="evidence-title-button"
+              onClick={() => onPreview(item)}
             >
-              {item.imageUrl ? (
-                <>
-                  <img className="evidence-image" src={item.imageUrl} alt={item.title} />
-                  <span className="evidence-image-zoom">点击放大</span>
-                </>
-              ) : (
-                <span className="evidence-image-placeholder">预留证物图片位</span>
-              )}
+              {item.title}
             </button>
-            <div className="info-card-title">{item.title}</div>
-            <div className="info-card-description">{item.description}</div>
             <div className="evidence-source">来源：{item.sourceHint}</div>
           </article>
         ))}
       </div>
     </section>
+  );
+}
+
+function EvidenceDetailModal({
+  evidence,
+  onClose,
+  onZoom
+}: {
+  evidence: EvidenceItem;
+  onClose: () => void;
+  onZoom: () => void;
+}) {
+  return (
+    <div className="image-modal-backdrop" onClick={onClose}>
+      <div className="evidence-detail-modal" onClick={(event) => event.stopPropagation()}>
+        <button type="button" className="image-modal-close" onClick={onClose}>
+          关闭
+        </button>
+        <button
+          type="button"
+          className={`evidence-image-slot evidence-detail-image ${evidence.imageUrl ? "has-image" : "empty"}`}
+          onClick={() => evidence.imageUrl && onZoom()}
+          disabled={!evidence.imageUrl}
+        >
+          {evidence.imageUrl ? (
+            <>
+              <img className="evidence-image" src={evidence.imageUrl} alt={evidence.title} />
+              <span className="evidence-image-zoom">点击放大</span>
+            </>
+          ) : (
+            <span className="evidence-image-placeholder">预留证物图片位</span>
+          )}
+        </button>
+        <div className="image-modal-title">{evidence.title}</div>
+        <div className="image-modal-description">{evidence.description}</div>
+        <div className="evidence-detail-source">来源：{evidence.sourceHint}</div>
+      </div>
+    </div>
   );
 }
 
