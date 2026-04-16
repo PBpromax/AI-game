@@ -22,7 +22,14 @@ export function InspectorPanel({
 
   return (
     <aside className="right-panel">
-      <div className="panel-title">开发者侧栏</div>
+      <section className="self-portrait-card">
+        <div className="self-portrait-frame">
+          <div className="self-portrait-placeholder">
+            <span className="self-portrait-name">我</span>
+            <span className="self-portrait-hint">预留头像图片位</span>
+          </div>
+        </div>
+      </section>
 
       <section className="inspector-card">
         <div className="inspector-title">案件状态</div>

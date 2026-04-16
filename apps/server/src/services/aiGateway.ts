@@ -83,13 +83,17 @@ export async function generateNpcReplyWithAi(
   const intent = coerceIntent(payload.intent);
   const matchedRuleId = coerceRuleId(payload.matchedRuleId, input.availableRules);
   const nextAttitude = coerceAttitude(payload.nextAttitude);
-  const replyText = coerceText(
+  const rawReplyText = coerceText(
     ensureEmotionPrefix(
       payload.replyText,
       nextAttitude ?? input.npcRuntime.attitude,
       input.npc.profile.tone
     ),
     `${pickEmotionPrefix(nextAttitude ?? input.npcRuntime.attitude, input.npc.profile.tone)}这件事我能说的先说到这里。`
+  );
+  const replyText = sanitizeNpcReplyText(
+    rawReplyText,
+    `${pickEmotionPrefix(nextAttitude ?? input.npcRuntime.attitude, input.npc.profile.tone)}这件事我记得的部分就是这些。`
   );
   const progressMade =
     typeof payload.progressMade === "boolean" ? payload.progressMade : Boolean(matchedRuleId);
@@ -227,7 +231,10 @@ function buildChatSystemPrompt(): string {
     "22. 心理短语后直接接正常回复正文，不要换行，不要重复两个状态短语。",
     "23. 不要总在句尾用“你可以继续问”“你想先问哪个”“还有什么要问”这类明显引导玩家追问的表达，除非当前情境确实需要角色主动提出下一步建议。",
     "24. 更像自然对话收尾，可以停在回忆、判断、态度或事实本身，不必每次都抛回一个问题。",
-    '25. 输出格式必须为 {"intent":"...","replyText":"...","matchedRuleId":"...","progressMade":true,"nextAttitude":"...","hint":"..."}。'
+    "25. 不要写成提示词口吻，不要出现“你问得具体一点”“有想确认的细节直接说”“我能核实的都会告诉你”这种像在教玩家提问的话。",
+    "26. NPC 的任务是回答当前这一问，而不是主持对话或推动玩家继续发问。",
+    "27. 即便回答不完整，也优先用角色态度、记忆缺口或立场本身收住，不要给出下一轮提问建议。",
+    '28. 输出格式必须为 {"intent":"...","replyText":"...","matchedRuleId":"...","progressMade":true,"nextAttitude":"...","hint":"..."}。'
   ].join("\n");
 }
 
@@ -270,7 +277,16 @@ function buildChatUserPrompt(input: ChatPromptInput): string {
     replyStyleGuide: {
       preferredLength: "2-4句，45-120字，像正常微信聊天",
       softOffTopicStrategy: "先自然接话，再轻微拉回案件",
-      avoid: ["机械重复关系不大", "客服式拒答", "过短的一句话打发", "大段旁白", "连续多轮复读同一句提醒"]
+      avoid: [
+        "机械重复关系不大",
+        "客服式拒答",
+        "过短的一句话打发",
+        "大段旁白",
+        "连续多轮复读同一句提醒",
+        "教玩家该怎么提问",
+        "邀请玩家继续追问",
+        "像系统提示一样总结下一步"
+      ]
     }
   });
 }
@@ -390,6 +406,50 @@ function ensureEmotionPrefix(
   }
 
   return `${pickEmotionPrefix(attitude, tone)}${trimmed}`;
+}
+
+function sanitizeNpcReplyText(value: string, fallback: string): string {
+  const prefixMatch = value.match(/^[（(][^）)]{1,20}[）)]/);
+  const prefix = prefixMatch?.[0]?.replace(/^\(([^)]{1,20})\)/, "（$1）") ?? "";
+  let body = prefix.length > 0 ? value.slice(prefix.length).trim() : value.trim();
+
+  const bannedPatterns = [
+    /你不用问得这么宽泛[，,、]?/g,
+    /想到具体的?疑问直接说就好[，,、]?/g,
+    /有具体想确认的细节直接说就好[，,、]?/g,
+    /你问得再具体一点[，,、]?/g,
+    /你问得具体一点[，,、]?/g,
+    /有想确认的细节直接说[，,、]?/g,
+    /能告知的我都会如实告诉你[。！!，,、]?/g,
+    /能告知的我一定都告诉你[。！!，,、]?/g,
+    /我能核实的内容都会如实告诉你[。！!，,、]?/g,
+    /我能确认的部分我会老实告诉你[。！!，,、]?/g,
+    /你想问具体细节直接说就好[。！!，,、]?/g,
+    /你想问哪个[？?。！!，,、]?/g,
+    /你可以继续问[。！!，,、]?/g,
+    /还有什么要问[？?。！!，,、]?/g
+  ];
+
+  for (const pattern of bannedPatterns) {
+    body = body.replace(pattern, "");
+  }
+
+  body = body
+    .replace(/[，,、]{2,}/g, "，")
+    .replace(/[。]{2,}/g, "。")
+    .replace(/^[，,、。；;：: ]+/, "")
+    .replace(/[，,、；;：: ]+$/, "")
+    .trim();
+
+  if (body.length === 0) {
+    return fallback;
+  }
+
+  if (!/[。！？!?]$/.test(body)) {
+    body = `${body}。`;
+  }
+
+  return `${prefix}${body}`;
 }
 
 function pickEmotionPrefix(
