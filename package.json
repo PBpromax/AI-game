@@ -1,0 +1,19 @@
+{
+  "name": "ai-deduction-game",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @ai-deduction/server\" \"npm run dev -w @ai-deduction/web\"",
+    "build": "npm run build -w @ai-deduction/server && npm run build -w @ai-deduction/web",
+    "typecheck": "npm run typecheck -w @ai-deduction/server && npm run typecheck -w @ai-deduction/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
